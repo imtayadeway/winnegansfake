@@ -14,10 +14,9 @@ module WinnegansFake
   DB = Sequel.postgres
 
   def self.post
-    cursor = Cursor.new
     file = File.new("finneganswake.txt", "r")
-    chonk = Chunk.new(file: file, cursor: cursor)
-    Skeet.new.make(chonk: chonk, cursor: cursor)
+    chonk = Chunk.new(file: file)
+    Skeet.new.make(chonk: chonk)
   end
 
   def self.post?

@@ -10,7 +10,7 @@ module WinnegansFake
     attr_reader :file, :cursor, :size
     attr_accessor :text, :raw_text, :wraparound_text
 
-    def initialize(file:, cursor:, size: DEFAULT_SIZE)
+    def initialize(file:, cursor: Cursor.new, size: DEFAULT_SIZE)
       @file = file
       @cursor = cursor
       @size = size

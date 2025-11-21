@@ -13,6 +13,10 @@ module WinnegansFake
           }
         }
       )
+      true
+    rescue Minisky::Error
+      # TODO: logging
+      false
     end
 
     private
