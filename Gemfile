@@ -2,6 +2,7 @@ source "https://rubygems.org"
 
 gem "dotenv"
 gem "minisky"
+gem "pg"
 gem "sequel"
 
 group :development do
@@ -9,5 +10,6 @@ group :development do
 end
 
 group :test do
+  gem "database_cleaner-sequel"
   gem "minitest"
 end

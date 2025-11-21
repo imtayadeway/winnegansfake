@@ -1,7 +1,6 @@
 require "test_helper"
-require "winnegansfake/chunk"
 
-class ChunkTest < Minitest::Test
+class ChunkTest < WinnegansFake::Test
   def test_text
     file = StringIO.new("The quick brown fox jumps over the lazy dog")
     cursor = Struct.new(:get).new(0)

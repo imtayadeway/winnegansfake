@@ -1,11 +1,14 @@
 require "bundler/setup"
 require "minisky"
+require "sequel"
 
 module WinnegansFake
   require "winnegansfake/chunk"
   require "winnegansfake/cursor"
   require "winnegansfake/skeet"
   require "winnegansfake/timestamp"
+
+  DB = Sequel.postgres
 
   def self.post
     cursor = Cursor.new
