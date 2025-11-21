@@ -142,12 +142,12 @@ class ChunkTest < Minitest::Test
     end.new
     file = File.new("finneganswake.txt", "r")
 
-    6.times do
+    500.times do
       chunk = WinnegansFake::Chunk.new(file: file, cursor: cursor)
       cursor.set(chunk.next_pos)
-      # puts "#" * 90
-      # puts chunk.text
-      # puts "#" * 90
+      puts "#" * 90
+      puts chunk.text
+      puts "#" * 90
     end
   end
 end
