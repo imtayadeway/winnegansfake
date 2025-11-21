@@ -1,9 +1,11 @@
 require "bundler/setup"
 require "winnegansfake"
 require "database_cleaner/sequel"
-require "dotenv/load"
+require "dotenv"
 require "timecop"
 require "minitest/autorun"
+
+Dotenv.load(".env.test")
 
 DatabaseCleaner.strategy = :truncation
 

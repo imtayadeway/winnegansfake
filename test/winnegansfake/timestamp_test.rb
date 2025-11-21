@@ -3,7 +3,7 @@ require "test_helper"
 class TimestampTest < WinnegansFake::Test
   def test_post_true
     Timecop.freeze do
-      WinnegansFake::DB[:timestamp].insert(value: Time.now.utc - WinnegansFake::Timestamp::CADENCE - 1)
+      WinnegansFake::DB[:timestamp].insert(value: Time.now.utc - WinnegansFake::Config.cadence - 1)
 
       assert WinnegansFake::Timestamp.new.post?
     end
@@ -11,7 +11,7 @@ class TimestampTest < WinnegansFake::Test
 
   def test_post_false
     Timecop.freeze do
-      WinnegansFake::DB[:timestamp].insert(value: Time.now.utc - WinnegansFake::Timestamp::CADENCE + 1)
+      WinnegansFake::DB[:timestamp].insert(value: Time.now.utc - WinnegansFake::Config.cadence + 1)
 
       refute WinnegansFake::Timestamp.new.post?
     end
@@ -19,7 +19,7 @@ class TimestampTest < WinnegansFake::Test
 
   def test_touch
     Timecop.freeze do
-      WinnegansFake::DB[:timestamp].insert(value: Time.now.utc - WinnegansFake::Timestamp::CADENCE - 1)
+      WinnegansFake::DB[:timestamp].insert(value: Time.now.utc - WinnegansFake::Config.cadence - 1)
 
       WinnegansFake::Timestamp.new.touch
 
