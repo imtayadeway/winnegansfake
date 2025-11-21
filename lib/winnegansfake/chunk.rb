@@ -11,12 +11,21 @@ module WinnegansFake
     end
 
     def text
-      file.pos = cursor.get
-      file.readpartial(size).strip
+      @text ||=
+        begin
+          file.pos = cursor.get
+          t = file.readpartial(size).strip
+          if file.eof?
+            file.rewind
+            t.concat(" " + file.readpartial(size - t.size))
+          end
+          t
+        end
     end
 
     def next_pos
-
+      text
+      file.pos
     end
   end
 end
