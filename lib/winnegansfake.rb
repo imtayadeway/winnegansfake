@@ -2,6 +2,8 @@ require "bundler/setup"
 require "minisky"
 require "sequel"
 
+Sequel.default_timezone = :utc
+
 module WinnegansFake
   require "winnegansfake/chunk"
   require "winnegansfake/cursor"

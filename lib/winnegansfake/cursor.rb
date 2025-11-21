@@ -1,7 +1,7 @@
 module WinnegansFake
   class Cursor
     def get
-      DB[:cursor].first[:value]
+      (DB[:cursor].first || { value: 0 })[:value]
     end
 
     def set(value)

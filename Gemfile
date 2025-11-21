@@ -12,4 +12,5 @@ end
 group :test do
   gem "database_cleaner-sequel"
   gem "minitest"
+  gem "timecop"
 end
