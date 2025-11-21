@@ -4,7 +4,8 @@ module WinnegansFake
     TRAILING_WORD_PARTIALS_REGEX = /[^\s]+\z/.freeze
     TRAILING_NEW_PARAGRAPHS_REGEX = /\n.*\z/.freeze
     TRAILING_SENTENCE_FRAGMENTS_REGEX = /[^,\.]+\z/.freeze
-    PUNCTUATION_REGEX = /[,\.]/.freeze
+    PUNCTUATION_REGEX = /[,\.:;!\?]/.freeze
+    UNACCEPTABLE_SENTENCE_FRAGMENTS_BOUNDARY = 0.75
 
     attr_reader :file, :cursor, :size
     attr_accessor :text
@@ -63,7 +64,11 @@ module WinnegansFake
     end
 
     def unacceptable_trailing_sentence_fragments?
-      text[(size * 0.75).floor..-1]&.match?(PUNCTUATION_REGEX)
+      unacceptable_sentence_fragments_zone&.match?(PUNCTUATION_REGEX)
+    end
+
+    def unacceptable_sentence_fragments_zone
+      text[(size * UNACCEPTABLE_SENTENCE_FRAGMENTS_BOUNDARY).floor..-1]
     end
 
     def strip_whitespace
