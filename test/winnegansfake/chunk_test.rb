@@ -84,4 +84,17 @@ class ChunkTest < Minitest::Test
 
     assert_equal "The quick brown fox jumps over the lazy dog.", chunk
   end
+
+  def test_can_advance_over_lines
+    file = StringIO.new("The quick brown fox\njumps over the lazy dog")
+    cursor = Struct.new(:get).new(0)
+    chunk = WinnegansFake::Chunk.new(file: file, cursor: cursor, size: 19)
+
+    assert_equal "The quick brown fox", chunk.text
+
+    next_cursor = Struct.new(:get).new(chunk.next_pos)
+    next_chunk = WinnegansFake::Chunk.new(file: file, cursor: next_cursor, size: 24)
+
+    assert_equal "jumps over the lazy dog", next_chunk.text
+  end
 end

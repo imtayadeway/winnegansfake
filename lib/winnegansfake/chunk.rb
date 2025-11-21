@@ -3,15 +3,13 @@ module WinnegansFake
     DEFAULT_SIZE = 300.freeze
 
     attr_reader :file, :cursor, :size
+    attr_accessor :text
 
     def initialize(file:, cursor:, size: DEFAULT_SIZE)
       @file = file
       @cursor = cursor
       @size = size
-    end
-
-    def text
-      @text ||= get_text
+      generate_text
     end
 
     def next_pos
@@ -21,32 +19,47 @@ module WinnegansFake
 
     private
 
-    def get_text
-      file.pos = cursor.get
-      t = file.readpartial(size)
+    def generate_text
+      read_raw_sample
+      handle_wraparound
+      ensure_whole_words
+      strip_whitespace
+      ensure_single_line
+      trim_to_punctuation
+    end
 
-      # wraparound
+    def read_raw_sample
+      file.pos = cursor.get
+      self.text = file.readpartial(size)
+    end
+
+    def handle_wraparound
       if file.eof?
         file.rewind
-        t.concat(" " + file.readpartial(size - t.size))
+        text.concat(" " + file.readpartial(size - text.size))
       end
+    end
 
-      # end on whole word
+    def ensure_whole_words
       unless file.pread(1, file.pos).match?(/\s/)
-        t.sub!(/[^\s]+\z/, "")
+        text.sub!(/[^\s]+\z/, "")
       end
+    end
 
-      # linebreaks
-      if t.match?(/\n/)
-        t.sub!(/\n.*\z/, "")
+    def ensure_single_line
+      if text.match?(/\n/)
+        text.sub!(/\n.*\z/, "")
       end
+    end
 
-      # end near punctuation
-      if t[(size * 0.75).floor..-1].match?(/[,\.]/)
-        t.sub!(/[^,\.]+\z/, "")
+    def trim_to_punctuation
+      if text[(size * 0.75).floor..-1].match?(/[,\.]/)
+        text.sub!(/[^,\.]+\z/, "")
       end
+    end
 
-      t.strip.chomp
+    def strip_whitespace
+      text.strip!
     end
   end
 end
