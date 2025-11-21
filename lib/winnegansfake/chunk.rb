@@ -8,7 +8,7 @@ module WinnegansFake
     UNACCEPTABLE_SENTENCE_FRAGMENTS_BOUNDARY = 0.66
 
     attr_reader :file, :cursor, :size
-    attr_accessor :text, :raw_text
+    attr_accessor :text, :raw_text, :wraparound_text
 
     def initialize(file:, cursor:, size: DEFAULT_SIZE)
       @file = file
@@ -18,11 +18,20 @@ module WinnegansFake
     end
 
     def next_pos
-      # TODO: handle wraparound
-      cursor.get + text.size + leading_whitespace_chars + 1
+      if wraparound_text?
+        (0..wraparound_text.size).detect do |n|
+          text.end_with?(wraparound_text[0..n])
+        end + 1
+      else
+        cursor.get + text.size + leading_whitespace_chars + 1
+      end
     end
 
     private
+
+    def wraparound_text?
+      !!wraparound_text
+    end
 
     def leading_whitespace_chars
       (raw_text.slice(/\A\s+/) || "").size
@@ -46,7 +55,8 @@ module WinnegansFake
     def handle_wraparound
       if file.eof?
         file.rewind
-        text.concat(" " + file.readpartial(size - text.size))
+        self.wraparound_text = file.readpartial(size - text.size)
+        text.concat(" " + wraparound_text)
       end
     end
 

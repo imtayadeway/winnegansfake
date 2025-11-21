@@ -58,8 +58,13 @@ class ChunkTest < Minitest::Test
     assert_equal "The quick brown fox", next_chunk.text
   end
 
-  def test_pread_eof_error
+  def test_next_pos_wraparound
+    file = StringIO.new("the quick brown fox jumps over the lazy dog")
+    cursor = Struct.new(:get).new(0)
+    chunk = WinnegansFake::Chunk.new(file: file, cursor: cursor, size: 49)
 
+    assert_equal "the quick brown fox jumps over the lazy dog the", chunk.text
+    assert_equal chunk.next_pos, 3
   end
 
   def test_wraps_around
