@@ -1,6 +1,7 @@
 require "bundler/setup"
 require "winnegansfake"
 require "database_cleaner/sequel"
+require "dotenv/load"
 require "timecop"
 require "minitest/autorun"
 
