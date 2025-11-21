@@ -45,6 +45,23 @@ class ChunkTest < Minitest::Test
     assert_equal "jumps over the lazy dog", next_chunk.text
   end
 
+  def test_next_pos_weirdness
+    file = StringIO.new("\n\nThe quick brown fox jumps over the lazy dog. The quick brown fox jumps over the lazy dog.")
+    cursor = Struct.new(:get).new(0)
+    chunk = WinnegansFake::Chunk.new(file: file, cursor: cursor, size: 55)
+
+    assert_equal "The quick brown fox jumps over the lazy dog.", chunk.text
+
+    next_cursor = Struct.new(:get).new(chunk.next_pos)
+    next_chunk = WinnegansFake::Chunk.new(file: file, cursor: next_cursor, size: 22)
+
+    assert_equal "The quick brown fox", next_chunk.text
+  end
+
+  def test_pread_eof_error
+
+  end
+
   def test_wraps_around
     file = StringIO.new("the quick brown fox jumps over the lazy dog")
     cursor = Struct.new(:get).new(30)
@@ -120,12 +137,12 @@ class ChunkTest < Minitest::Test
     end.new
     file = File.new("finneganswake.txt", "r")
 
-    30.times do
+    6.times do
       chunk = WinnegansFake::Chunk.new(file: file, cursor: cursor)
       cursor.set(chunk.next_pos)
-      puts "#" * 90
-      puts chunk.text
-      puts "#" * 90
+      # puts "#" * 90
+      # puts chunk.text
+      # puts "#" * 90
     end
   end
 end

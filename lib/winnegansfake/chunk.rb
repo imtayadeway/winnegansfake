@@ -2,13 +2,13 @@ module WinnegansFake
   class Chunk
     DEFAULT_SIZE = 300.freeze
     TRAILING_WORD_PARTIALS_REGEX = /[^\s]+\z/.freeze
-    TRAILING_NEW_PARAGRAPHS_REGEX = /\n.*\z/.freeze
-    TRAILING_SENTENCE_FRAGMENTS_REGEX = /[^,\.]+\z/.freeze
+    TRAILING_NEW_PARAGRAPHS_REGEX = /(\n.*)+\z/.freeze
+    TRAILING_SENTENCE_FRAGMENTS_REGEX = /[^,\.:;!\?]+\z/.freeze
     PUNCTUATION_REGEX = /[,\.:;!\?]/.freeze
-    UNACCEPTABLE_SENTENCE_FRAGMENTS_BOUNDARY = 0.75
+    UNACCEPTABLE_SENTENCE_FRAGMENTS_BOUNDARY = 0.66
 
     attr_reader :file, :cursor, :size
-    attr_accessor :text
+    attr_accessor :text, :raw_text
 
     def initialize(file:, cursor:, size: DEFAULT_SIZE)
       @file = file
@@ -19,10 +19,14 @@ module WinnegansFake
 
     def next_pos
       # TODO: handle wraparound
-      cursor.get + text.size + 1
+      cursor.get + text.size + leading_whitespace_chars + 1
     end
 
     private
+
+    def leading_whitespace_chars
+      (raw_text.slice(/\A\s+/) || "").size
+    end
 
     def generate_text
       read_raw_sample
@@ -35,7 +39,8 @@ module WinnegansFake
 
     def read_raw_sample
       file.pos = cursor.get
-      self.text = file.readpartial(size)
+      self.raw_text = file.readpartial(size)
+      self.text = raw_text.dup
     end
 
     def handle_wraparound
