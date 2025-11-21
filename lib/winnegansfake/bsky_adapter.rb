@@ -1,7 +1,7 @@
 module WinnegansFake
   class BskyAdapter
     def post(text:)
-      logger.info(component: self.class.name, at: __method__, text: text) do
+      logger.measure_info(component: self.class.name, at: __method__, text: text) do
         client.post_request(
           "com.atproto.repo.createRecord",
           {
