@@ -68,9 +68,9 @@ class ChunkTest < Minitest::Test
   end
 
   def test_wraps_around
-    file = StringIO.new("the quick brown fox jumps over the lazy dog")
+    file = StringIO.new("the quick brown fox jumps over the lazy dog\n")
     cursor = Struct.new(:get).new(30)
-    chunker = WinnegansFake::Chunk.new(file: file, cursor: cursor, size: 32)
+    chunker = WinnegansFake::Chunk.new(file: file, cursor: cursor, size: 33)
 
     chunk = chunker.text
 
@@ -142,7 +142,7 @@ class ChunkTest < Minitest::Test
     end.new
     file = File.new("finneganswake.txt", "r")
 
-    500.times do
+    6300.times do
       chunk = WinnegansFake::Chunk.new(file: file, cursor: cursor)
       cursor.set(chunk.next_pos)
       puts "#" * 90
