@@ -13,8 +13,8 @@ module WinnegansFake
     end
 
     def next_pos
-      text
-      file.pos
+      # TODO: handle wraparound
+      cursor.get + text.size + 1
     end
 
     private
@@ -53,7 +53,7 @@ module WinnegansFake
     end
 
     def trim_to_punctuation
-      if text[(size * 0.75).floor..-1].match?(/[,\.]/)
+      if text[(size * 0.75).floor..-1]&.match?(/[,\.]/)
         text.sub!(/[^,\.]+\z/, "")
       end
     end

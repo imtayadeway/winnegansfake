@@ -97,4 +97,35 @@ class ChunkTest < Minitest::Test
 
     assert_equal "jumps over the lazy dog", next_chunk.text
   end
+
+  def test_next_pos_inside_word_boundaries
+    file = StringIO.new("The quick brown fox jumps over the lazy dog")
+    cursor = Struct.new(:get).new(0)
+    chunker = WinnegansFake::Chunk.new(file: file, cursor: cursor, size: 22)
+
+    pos = chunker.next_pos
+
+    assert_equal 20, pos
+  end
+
+  def test_integration
+    cursor = Class.new do
+      def get
+        @n || 0
+      end
+
+      def set(n)
+        @n = n
+      end
+    end.new
+    file = File.new("finneganswake.txt", "r")
+
+    30.times do
+      chunk = WinnegansFake::Chunk.new(file: file, cursor: cursor)
+      cursor.set(chunk.next_pos)
+      puts "#" * 90
+      puts chunk.text
+      puts "#" * 90
+    end
+  end
 end
