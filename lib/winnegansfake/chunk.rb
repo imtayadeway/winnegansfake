@@ -56,7 +56,8 @@ module WinnegansFake
       if file.eof?
         file.rewind
         self.wraparound_text = file.readpartial(size - text.size)
-        text.chomp!.concat(" " + wraparound_text)
+        text.chomp!
+        text.concat(" " + wraparound_text)
       end
     end
 
