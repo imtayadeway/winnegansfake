@@ -2,4 +2,10 @@
 
 require "winnegansfake"
 
-Winnegansfake.post
+loop do
+  if Winnegansfake.post?
+    Winnegansfake.post
+  else
+    sleep(60)
+  end
+end
