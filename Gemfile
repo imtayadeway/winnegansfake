@@ -1,5 +1,6 @@
 source "https://rubygems.org"
 
+gem "semantic_logger"
 gem "minisky"
 gem "pg"
 gem "sequel"

@@ -1,7 +1,9 @@
 require "bundler/setup"
+require "semantic_logger"
 require "minisky"
 require "sequel"
 
+SemanticLogger.default_level = :trace
 Sequel.default_timezone = :utc
 
 module WinnegansFake
@@ -22,5 +24,9 @@ module WinnegansFake
 
   def self.post?
     WinnegansFake::Timestamp.new.post?
+  end
+
+  def self.logger
+    @logger ||= SemanticLogger["WinnegansFake"]
   end
 end
