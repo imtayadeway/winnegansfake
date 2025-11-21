@@ -1,0 +1,20 @@
+#!/usr/bin/env ruby
+
+$LOAD_PATH.unshift(File.expand_path(File.join(__dir__, "..", "lib")))
+
+require "bundler/setup"
+require "winnegansfake"
+
+unless WinnegansFake::DB.table_exists?(:cursor)
+  WinnegansFake::DB.create_table :cursor do
+    primary_key :id
+    Integer :value, null: false
+  end
+end
+
+unless WinnegansFake::DB.table_exists?(:timestamp)
+  WinnegansFake::DB.create_table :timestamp do
+    primary_key :id
+    DateTime :value, null: false
+  end
+end
