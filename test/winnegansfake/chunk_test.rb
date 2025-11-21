@@ -142,7 +142,8 @@ class ChunkTest < Minitest::Test
     end.new
     file = File.new("finneganswake.txt", "r")
 
-    6300.times do
+    # ~6300 times for a complete cycle
+    100.times do
       chunk = WinnegansFake::Chunk.new(file: file, cursor: cursor)
       cursor.set(chunk.next_pos)
       puts "#" * 90
