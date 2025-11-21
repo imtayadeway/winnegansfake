@@ -5,7 +5,7 @@ class ChunkTest < Minitest::Test
   def test_text
     file = StringIO.new("The quick brown fox jumps over the lazy dog")
     cursor = Struct.new(:get).new(0)
-    chunker = WinnegansFake::Chunk.new(file: file, cursor: cursor, size: 20)
+    chunker = WinnegansFake::Chunk.new(file: file, cursor: cursor, size: 19)
 
     chunk = chunker.text
 
@@ -15,7 +15,7 @@ class ChunkTest < Minitest::Test
   def test_reads_from_cursor
     file = StringIO.new("The quick brown fox jumps over the lazy dog")
     cursor = Struct.new(:get).new(4)
-    chunker = WinnegansFake::Chunk.new(file: file, cursor: cursor, size: 16)
+    chunker = WinnegansFake::Chunk.new(file: file, cursor: cursor, size: 15)
 
     chunk = chunker.text
 
@@ -35,7 +35,7 @@ class ChunkTest < Minitest::Test
   def test_next_pos
     file = StringIO.new("The quick brown fox jumps over the lazy dog")
     cursor = Struct.new(:get).new(0)
-    chunk = WinnegansFake::Chunk.new(file: file, cursor: cursor, size: 20)
+    chunk = WinnegansFake::Chunk.new(file: file, cursor: cursor, size: 19)
 
     assert_equal "The quick brown fox", chunk.text
 
@@ -48,7 +48,7 @@ class ChunkTest < Minitest::Test
   def test_wraps_around
     file = StringIO.new("the quick brown fox jumps over the lazy dog")
     cursor = Struct.new(:get).new(30)
-    chunker = WinnegansFake::Chunk.new(file: file, cursor: cursor, size: 33)
+    chunker = WinnegansFake::Chunk.new(file: file, cursor: cursor, size: 32)
 
     chunk = chunker.text
 

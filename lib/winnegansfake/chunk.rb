@@ -20,14 +20,17 @@ module WinnegansFake
             t.concat(" " + file.readpartial(size - t.size))
           end
 
-          unless t.end_with?(" ")
-            t.sub!(/[^ ]+\z/, "")
+          #  maybe try to peek instead
+          unless file.pread(1, file.pos).match?(/\s/)
+            t.sub!(/[^\s]+\z/, "")
           end
 
+          # linebreaks
           if t.match?(/\n/)
             t.sub!(/\n.*\z/, "")
           end
 
+          # wraparound
           if t[(size * 0.75).floor..-1].match?(/[,\.]/)
             t.sub!(/[^,\.]+\z/, "")
           end
