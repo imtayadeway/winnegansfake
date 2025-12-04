@@ -15,7 +15,7 @@ module WinnegansFake
     end
 
     def host
-      "bsky.app"
+      "bsky.social"
     end
 
     def save_config
