@@ -19,7 +19,7 @@ module WinnegansFake
     rescue Minisky::Error => e
       data = {}
       data[:status] = e.status if e.respond_to?(:status)
-      data[:data] = e.data if e.respond_to(:data)
+      data[:data] = e.data if e.respond_to?(:data)
       logger.error({component: self.class.name, at: __method__, message: e.message}.merge(data))
       false
     end
