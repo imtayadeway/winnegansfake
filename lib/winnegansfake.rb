@@ -20,7 +20,7 @@ module WinnegansFake
   def self.post
     file = File.new("finneganswake.txt", "r")
     chonk = Chunk.new(file: file)
-    Skeet.new.make(chonk: chonk)
+    Skeet.new.make(chunk: chonk)
   end
 
   def self.post?
