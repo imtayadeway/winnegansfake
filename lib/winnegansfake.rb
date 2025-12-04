@@ -14,7 +14,7 @@ module WinnegansFake
   require "winnegansfake/skeet"
   require "winnegansfake/timestamp"
 
-  DB = Sequel.postgres
+  DB = Sequel.connect(WinnegansFake::Config.database_url)
 
   def self.post
     file = File.new("finneganswake.txt", "r")
