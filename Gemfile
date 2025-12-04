@@ -1,8 +1,9 @@
 source "https://rubygems.org"
 
-gem "semantic_logger"
+gem "logger"
 gem "minisky"
 gem "pg"
+gem "semantic_logger"
 gem "sequel"
 
 group :development do

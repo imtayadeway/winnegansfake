@@ -9,6 +9,7 @@ GEM
       database_cleaner-core (~> 2.0.0)
       sequel
     dotenv (3.1.8)
+    logger (1.7.0)
     minisky (0.5.0)
       base64 (~> 0.1)
     minitest (5.26.2)
@@ -28,6 +29,7 @@ PLATFORMS
 DEPENDENCIES
   database_cleaner-sequel
   dotenv
+  logger
   minisky
   minitest
   pg
