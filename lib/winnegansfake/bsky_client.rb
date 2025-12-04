@@ -11,7 +11,7 @@ module WinnegansFake
     def initialize
       FileUtils.touch(CONFIG_PATH)
       @config = YAML.safe_load_file(CONFIG_PATH, fallback: {}).
-                  merge(id: Config.bsky_id, pass: Config.bsky_pass)
+                  merge("id" => Config.bsky_id, "pass" => Config.bsky_pass)
     end
 
     def host
