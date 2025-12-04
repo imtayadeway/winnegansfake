@@ -5,7 +5,7 @@ module WinnegansFake
         client.post_request(
           "com.atproto.repo.createRecord",
           {
-            repo: bsky.user.did,
+            repo: client.user.did,
             collection: 'app.bsky.feed.post',
             record: {
               text: text,
@@ -27,7 +27,7 @@ module WinnegansFake
     private
 
     def client
-      Minisky.new("api.bsky.app", "config/bluesky.yml")
+      @client ||= BskyClient.new
     end
   end
 end

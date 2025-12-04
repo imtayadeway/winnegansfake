@@ -8,6 +8,7 @@ Sequel.default_timezone = :utc
 
 module WinnegansFake
   require "winnegansfake/bsky_adapter"
+  require "winnegansfake/bsky_client"
   require "winnegansfake/chunk"
   require "winnegansfake/config"
   require "winnegansfake/cursor"
