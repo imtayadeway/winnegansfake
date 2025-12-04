@@ -29,5 +29,9 @@ module WinnegansFake
     def client
       @client ||= BskyClient.new
     end
+
+    def logger
+      WinnegansFake.logger
+    end
   end
 end
