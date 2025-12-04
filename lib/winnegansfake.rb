@@ -3,6 +3,8 @@ require "semantic_logger"
 require "minisky"
 require "sequel"
 
+$stdout.sync = true
+SemanticLogger.add_appender(io: $stdout, formatter: :color)
 SemanticLogger.default_level = :trace
 Sequel.default_timezone = :utc
 
