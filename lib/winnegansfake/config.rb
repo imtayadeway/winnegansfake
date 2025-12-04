@@ -9,7 +9,7 @@ module WinnegansFake
     end
 
     def self.cadence
-      ENV.fetch("CADENCE").to_i
+      ENV.fetch("CADENCE", 10800).to_i
     end
 
     def self.database_url
