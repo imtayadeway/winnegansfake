@@ -3,8 +3,7 @@
 require "bundler/setup"
 require "sequel"
 
-DB = Sequel.postgres
-DB.execute("CREATE DATABASE winnegansfake")
+DB = Sequel.connect(ENV.fetch("DATABASE_URL"))
 
 DB.create_table? :cursor do
   primary_key :id
