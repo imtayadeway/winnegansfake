@@ -4,8 +4,8 @@ $LOAD_PATH.unshift(File.expand_path(File.join(__dir__, "..", "lib")))
 require "winnegansfake"
 
 loop do
-  if Winnegansfake.post?
-    Winnegansfake.post
+  if WinnegansFake.post?
+    WinnegansFake.post
   else
     sleep(60)
   end
